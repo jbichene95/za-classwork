@@ -1,0 +1,13 @@
+[Unit]
+Description=calculator
+After=network.target
+
+[Service]
+User=azureuser
+Group=www-data
+WorkingDirectory=/home/ubuntu/test
+Environment="PATH=/home/ubuntu/test/venv/bin"
+ExecStart=/home/ubuntu/test/venv/bin/gunicorn --workers 2 --bind 0.0.0.0:5000 /home/ubuntu/test/ui/wsgi:/home/ubuntu/test/ui/app
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,29 @@
+---
+- name: python deployment
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: clone project repo
+    ansible.builtin.git:
+    
+      repo: https://github.com/chinasaz/eternity.git
+      dest: /home/ubuntu/test
+  
+  - name: Run the equivalent of "apt-get update" as a separate step
+    ansible.builtin.apt:
+      update_cache: yes
+  
+  - name: Install a list of packages
+    ansible.builtin.apt:
+      pkg:
+      - python3-pip
+      - virtualenv
+      - nginx
+  
+  
+  - name: Install specified python requirements in indicated (virtualenv)
+    ansible.builtin.pip:
+      requirements: /home/ubuntu/test/requirements.txt
+      virtualenv: /home/ubuntu/test/venv
+      
